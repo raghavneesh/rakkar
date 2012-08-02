@@ -197,7 +197,7 @@
 					}
 					if(instruction.data){
 						var fn=getFunction(execs,instruction.data);
-						$(currentElement).data("MT",fn(dataObj,currentElement));
+						$(currentElement).data("cdata",fn(dataObj,currentElement));
 					}
 					if(instruction.children){
 						var numChild=instruction.children.length;
