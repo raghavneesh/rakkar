@@ -11,17 +11,17 @@ It compiles the code you write at server itself and create a build for you to be
 
 
 Install-
-1. Checkout the repository
-2. Install node.js v0.4.11 (I've run on this version for now)
-3. Install npm, jsdom and jquery on your development machine
-4. just put your local configurations in buildProp.js and you are all set :)
-5. Make a folder in src folder for your custom page. See home folder for
+   1. Checkout the repository
+   2. Install node.js v0.4.11 (I've run on this version for now)
+   3. Install npm, jsdom and jquery on your development machine
+   4. just put your local configurations in buildProp.js and you are all set :)
+   5. Make a folder in src folder for your custom page. See home folder for
    reference.
-6. XML file contains the HTML code, while javascript file contains helper
+   6. XML file contains the HTML code, while javascript file contains helper
    methods.
-7. Structure for files explained as below:
+   7. Structure for files explained as below:
 
-    a. home.xml ------> 
+      a. home.xml ------> 
                             <!-- Super parent tag like <html> in .html file, which contains all type of tags.-->
                             <configs>
                             <js>home.js</js>
@@ -67,7 +67,7 @@ Install-
                             </config>
                         </configs>
 
-    b. home.js -----> var instructions={ //An object to keep your instructions
+      b. home.js -----> var instructions={ //An object to keep your instructions
                             //Context data is any data, you passed for html creation
                             // html element is current element
                             isNestedContainer: function(contextData,currentElement){
