@@ -6,6 +6,7 @@ Keep even a small part of your HTML fragment separate from others, and reuse the
 Call javascript functions and attach events, while writing HTML code. Custom attributes like condition, toolTip, data are cherry on top :) . Fetch page resources
 on demand only.
 Export minify files for production.
+Check it out working on www.metataste.com
 
 It compiles the code you write at server itself and create a build for you to be deployed on your server.
 
