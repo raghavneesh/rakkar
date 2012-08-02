@@ -1,0 +1,18 @@
+<configs>
+	<js>home.js</js>
+	<config id="home-container">
+		<div id="container">
+			<h1>Go geta home</h1>
+			<div class="nested-container-sample" condition="isNestedContainer()">
+				<span class="nested-element"></span>
+			</div>
+		</div>
+	</config>
+	<config id="repeat-sample">
+		<div id="repeat-sample">
+			<repeat repeatarray="getItemArray()">
+				<span>getItemElem()</span>
+			</repeat>
+		</div>
+	</config>
+</configs>
