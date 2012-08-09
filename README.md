@@ -8,37 +8,37 @@ If you are making a web or mobile app which generates HTML dynamically from JSON
 
 Here are some salient features :
 
-Separate view from control in your code.
+* Separate view from control in your code.
 
-Package your entire application in an easy and clean manner
+* Package your entire application in an easy and clean manner
 
-Integrated and minified view and control, for efficiency during runtime(less and smaller resources are downloaded)
+* Integrated and minified view and control, for efficiency during runtime(less and smaller resources are downloaded)
 
-Generate DOM on the fly from Javascript objects/JSON, via declarative and easy to write HTML like instructions
+* Generate DOM on the fly from Javascript objects/JSON, via declarative and easy to write HTML like instructions
 
-Easily control the structure of a generated HTML fragment using condition attribute
+* Easily control the structure of a generated HTML fragment using condition attribute
 
-Attach events to generated DOM elements by simply declaring them as attributes in your HTML instruction(onClick, onHover etc)
+* Attach events to generated DOM elements by simply declaring them as attributes in your HTML instruction(onClick, onHover etc)
 
-Reuse HTML instruction fragments at multiple places.
+* Reuse HTML instruction fragments at multiple places.
 
-Declare callbacks to be executed before or after a generated HTML element is created
+* Declare callbacks to be executed before or after a generated HTML element is created
 
-Easy to write looping instructions for creation of HTML
+* Easy to write looping instructions for creation of HTML
 
-Custom Tags and attributes for HTML generation and event management ---->
+### Custom Tags and attributes for HTML generation and event management ---->
 
-Condition (attribute)- Should have function in it's value which returns a Boolean value which decides whether the  HTML
+* **Condition** (attribute)- Should have function in it's value which returns a Boolean value which decides whether the  HTML
                         Tag is to be generated or not.                        
-execPre (attribute)- Should function as it's value. It passes an additional callback function to the it's value
+* **execPre** (attribute)- Should function as it's value. It passes an additional callback function to the it's value
                      function, which would have to be called after business logic processing.
-execPost (attribute) - Should have function as it's value. It acts like a callback on particular tag creation. A tag is
+* **execPost** (attribute) - Should have function as it's value. It acts like a callback on particular tag creation. A tag is
                        supposed to be fully created, when all of it's children are created.
-toolTip (attribute) - It Can have a String or function or javascript object '.' notation as it's value, to show fancy
+* **toolTip** (attribute) - It Can have a String or function or javascript object '.' notation as it's value, to show fancy
                       toolTip over element. It uses tipTip.js jquery plugin.
-data (attribute) - It Can have a String or function or javascript object '.' notation as it's value, to store any type
+* **data** (attribute) - It Can have a String or function or javascript object '.' notation as it's value, to store any type
                    of data related to HTML element for further use.
-repeat (tag) - It is a special type of tag to iterate over any array. It has a special attribute 'repeatarray', which
+* **repeat** (tag) - It is a special type of tag to iterate over any array. It has a special attribute 'repeatarray', which
                can have a String or function or javascript object '.' notation as it's value, that returns an array to
                the tag. It is useful, in creating same HTML fragment for different items.
 
@@ -100,4 +100,4 @@ Files included has running demo. Lets have a look here:
 
 
 ----------------------------------------------------------------------
-Note- Will provide more information and updates, as soon as possible.
+**Note**- Will provide more information and updates, as soon as possible.
