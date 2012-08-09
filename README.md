@@ -1,7 +1,7 @@
 Rakkar
 ======
 
-Rakkar helps you create and maintain a medium to big dynamic webapp in a clean and easy way.  It provides a great set of building blocks for typical dynamic JavaScript applications which generate HTML on the fly and use multiple Javascript files.
+Rakkar helps you develop a dynamic and maintain webapp in a clean and easy way.  It provides a great set of building blocks for typical JavaScript applications which generate HTML on the fly and use multiple Javascript files.
 
 The idea behind Rakkar arose from a personal need which came up while we were working on the front-end of www.metataste.com, which is a reasonably big dynamic webapp. The business logic of Metataste was mixing up heavily with the HTML generation part. This made the code dirty and was a maintenance nightmare. Not only this, minifying and combining multiple Javascript files for deployment was a headache. 
 If you are making a web or mobile app which generates HTML dynamically from JSON, then Rakkar is a great option . It has been in use for www.metataste.com for quite some time.
@@ -22,7 +22,7 @@ Here are some salient features :
 
 * Reuse HTML instruction fragments at multiple places.
 
-* Declare callbacks to be executed before or after a generated HTML element is created
+* Declare callbacks to be executed before or after a generated HTML element is created (Can be quite very useful)
 
 * Easy to write looping instructions for creation of HTML
 
@@ -30,10 +30,8 @@ Here are some salient features :
 
 * **Condition** (attribute)- Should have function in it's value which returns a Boolean value which decides whether the  HTML
                         Tag is to be generated or not.                        
-* **execPre** (attribute)- Should function as it's value. It passes an additional callback function to the it's value
-                     function, which would have to be called after business logic processing.
-* **execPost** (attribute) - Should have function as it's value. It acts like a callback on particular tag creation. A tag is
-                       supposed to be fully created, when all of it's children are created.
+* **execPre** (attribute)- Should pass a function as it's value along with a callback which is to be executed once the function is processed.
+* **execPost** (attribute) - Should have function as it's value. This function is called when the tag is created along with its entire subtree.
 * **toolTip** (attribute) - It Can have a String or function or javascript object '.' notation as it's value, to show fancy
                       toolTip over element. It uses tipTip.js jquery plugin.
 * **data** (attribute) - It Can have a String or function or javascript object '.' notation as it's value, to store any type
@@ -42,7 +40,7 @@ Here are some salient features :
                can have a String or function or javascript object '.' notation as it's value, that returns an array to
                the tag. It is useful, in creating same HTML fragment for different items.
 
-Files included has running demo. Lets have a look here:
+Files included can be used to run a demo. Lets have a look here:
 
       XML file should be like this:
       
