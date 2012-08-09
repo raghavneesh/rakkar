@@ -9,13 +9,21 @@ If you are making a web or mobile app which generates HTML dynamically from JSON
 Here are some salient features :
 
 Separate view from control in your code.
+
 Package your entire application in an easy and clean manner
+
 Integrated and minified view and control, for efficiency during runtime(less and smaller resources are downloaded)
+
 Generate DOM on the fly from Javascript objects/JSON, via declarative and easy to write HTML like instructions
+
 Easily control the structure of a generated HTML fragment using condition attribute
+
 Attach events to generated DOM elements by simply declaring them as attributes in your HTML instruction(onClick, onHover etc)
+
 Reuse HTML instruction fragments at multiple places.
+
 Declare callbacks to be executed before or after a generated HTML element is created
+
 Easy to write looping instructions for creation of HTML
 
 Custom Tags and attributes for HTML generation and event management ---->
