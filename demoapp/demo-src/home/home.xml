@@ -2,17 +2,17 @@
 	<js>home.js</js>
 	<config id="home-container">
 		<div id="container">
-			<h1>Go geta home</h1>
+			<h1>Rakkar Home</h1>
 			<div class="nested-container-sample" condition="isNestedContainer()">
 				<span class="nested-element"></span>
 			</div>
 		</div>
 	</config>
 	<config id="repeat-sample">
-		<div id="repeat-sample">
+		<ul id="repeat-sample">
 			<repeat repeatarray="getItemArray()">
-				<span>getItemElem()</span>
+				<li>getItemElem()</li>
 			</repeat>
-		</div>
+		</ul>
 	</config>
 </configs>

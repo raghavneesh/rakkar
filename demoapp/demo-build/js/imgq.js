@@ -43,6 +43,7 @@ function imageLoader(){
 				}
 				im.onerror=function(){
 					th.current=im;
+					th.images.push(im);
 					(th.onLoaded(true));
 				}
 				im .src = imageSrc; // Tell the User Agent to GET the image

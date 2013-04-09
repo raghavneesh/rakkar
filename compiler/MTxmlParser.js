@@ -1,5 +1,5 @@
 /**
- *  Uses the xml file and it's helper javascript file and convert
+ *  Uses the XML file and it's helper Java-script file and convert
  *  into a single instruction object, that is to be used by
  *  browser to generate HTML.
  *
@@ -7,17 +7,13 @@
  */
 function parse(directory,file,MTPath,onParsed){
     if(!directory || !file){
-        onParsed("Specify proper arguments");
+        onParsed('Specify proper arguments');
         return;
      }
-    if(directory[directory.length-1]!=='/')
-        directory+="/";
-   var fileReader=require("fs");
-   var properties=require("./buildProp.js").prop;
-  var $=require(properties.customMod+"/node_modules/jquery");
-   var jsDom=require(properties.customMod+"/node_modules/jquery/node_modules/jsdom").jsdom;
-   fileReader.readFile(directory+file,"UTF-8",function(error,xmlFile){ //Read xml file
-        var xmlDoc=jsDom(xmlFile); //Convert string xml file to xml document using jsdom
+    if(directory[directory.length-1] !== '/')
+        directory+='/';
+   fileSystem.readFile(directory+file,'UTF-8',function(error,xmlFile){ //Read xml file
+        var xmlDoc=DOM(xmlFile); //Convert string xml file to xml document using jsdom
         _convertToObject(xmlDoc,function(error,obj){ //Convert xml document to instruction object
             onParsed(error,obj);
         });
@@ -26,27 +22,27 @@ function parse(directory,file,MTPath,onParsed){
     return MTPath[directory][fileName];
    }
    /**
-    * Convert xml document in to the form, that is to be
-    * deliver to the front-end javascript
-    * @param xml document
+    * Convert XML document in to the form, that is to be
+    * deliver to the front-end Java-script
+    * @param XML document
     */
    function _convertToObject(xmlDoc,onConvert){
-    var jsFileName=$(xmlDoc).find("js").text();
+    var jsFileName=jQuery(xmlDoc).find('js').text();
     var instructions={};
     if(!jsFileName)
         _convert();
     else{
-        fileReader.readFile(directory+jsFileName,"UTF-8",function(error,jsFile){ //Read javascript helper file
+        fileSystem.readFile(directory+jsFileName,'UTF-8',function(error,jsFile){ //Read javascript helper file
             if(error)
                 return;
-            jsFile=$.trim(jsFile);
-            jsFile=jsFile.substring(jsFile.indexOf("{"),jsFile.length-1);
+            jsFile=jQuery.trim(jsFile);
+            jsFile=jsFile.substring(jsFile.indexOf('{'),jsFile.length-1);
             _convert(jsFile);
            });
     }
     function _convert(execs){
          _toInstructionObject(function(docObj){
-              instructions["configs"]=docObj; //UI oriented object in configs property
+              instructions['configs']=docObj; //UI oriented object in configs property
               var instructionJson=JSON.stringify(instructions);
               onConvert(undefined,_addExecs(instructionJson));
           });
@@ -54,7 +50,7 @@ function parse(directory,file,MTPath,onParsed){
             if(!execs)
             return instructionJson;
             instructionJson=instructionJson.substring(0,instructionJson.length-1);
-           return  instructionJson+',"execs":'+execs+"}"; //UI helper functions in execs property
+           return  instructionJson+',"execs":'+execs+'}'; //UI helper functions in execs property
           }
     }
     /**
@@ -62,7 +58,7 @@ function parse(directory,file,MTPath,onParsed){
      */
     function _toInstructionObject(onObjectConversion){
         var docObj={};
-        $($(xmlDoc).find("config")).each(function(i,instnSet){
+        jQuery(jQuery(xmlDoc).find('config')).each(function(i,instnSet){
             _makeXmlInstruction(_cleanWhiteSpace(instnSet));
         });
         onObjectConversion(docObj);
@@ -80,31 +76,31 @@ function parse(directory,file,MTPath,onParsed){
         }
 
         function _makeXmlInstruction(instructionSet){
-            if(instructionSet.nodeName.toLowerCase()!=="config")
+            if(instructionSet.nodeName.toLowerCase()!=='config')
                 return;
             var instnSetObj={};
-            var instructionSetName=$(instructionSet).attr("id");
+            var instructionSetName=jQuery(instructionSet).attr('id');
             if(!instructionSetName)
                 return;
-            instnSetObj["name"]=instructionSetName;
+            instnSetObj['name']=instructionSetName;
            var instnChildren=[];
-           $($(instructionSet).children()).each(function(i,instnChild){
+           jQuery(jQuery(instructionSet).children()).each(function(i,instnChild){
             instnChildren.push(_makeInstructionObject(instnChild));
            });
            if(instnChildren.length>0)
-            instnSetObj["children"]=instnChildren;
+            instnSetObj['children']=instnChildren;
             docObj[instructionSetName]=instnSetObj;
 
 
            function _makeInstructionObject(htmlInstnSet){
             var instnObj={};
             if(htmlInstnSet.nodeType===3){
-                instnObj.name="textNode";
-                instnObj["textvalue"]=htmlInstnSet.nodeValue;
+                instnObj.name='textNode';
+                instnObj['textvalue']=htmlInstnSet.nodeValue;
            } else
                 instnObj.name=htmlInstnSet.nodeName;
            var childInstructions=[];
-           $(htmlInstnSet.childNodes).each(function(i,childNode){
+           jQuery(htmlInstnSet.childNodes).each(function(i,childNode){
             childInstructions.push(_makeInstructionObject(childNode));
            });
            var instnAttrs=htmlInstnSet.attributes;
@@ -112,7 +108,7 @@ function parse(directory,file,MTPath,onParsed){
            return instnObj;
            var attrObj={};
            var eventsObj={};
-           $.each(instnAttrs,function(i,attribute){
+           jQuery.each(instnAttrs,function(i,attribute){
             var attrName=attribute.nodeName;
             var attrValue=attribute.nodeValue;
             if(events[attrName]){
@@ -120,27 +116,27 @@ function parse(directory,file,MTPath,onParsed){
                 return true;
             }    
             switch(attrName){
-                case "append": $(attrValue.split(",")).each(function(i,instnId){
-                    var config=$(xmlDoc).find("config#"+instnId);
-                    $($(config).children()).each(function(i,appendInstn){
+                case 'append': jQuery(attrValue.split(',')).each(function(i,instnId){
+                    var config=jQuery(xmlDoc).find('config#'+instnId);
+                    jQuery(jQuery(config).children()).each(function(i,appendInstn){
                         childInstructions.push(_makeInstructionObject(_cleanWhiteSpace(appendInstn)));
                     });
                 });
                 break;
-                case "condition":
-                case "data":
-                case "execpre":
-                case "execpost":
-                case "tooltip":
+                case 'condition':
+                case 'data':
+                case 'execpre':
+                case 'execpost':
+                case 'tooltip':
                 instnObj[attrName]=attrValue;
                 break;
                 default:attrObj[attrName]=attrValue;
             }
            });
-           instnObj["events"]=eventsObj;
-           instnObj["attributes"]=attrObj;
+           instnObj['events']=eventsObj;
+           instnObj['attributes']=attrObj;
            if(childInstructions.length>0)
-            instnObj["children"]=childInstructions;
+            instnObj['children']=childInstructions;
            return instnObj;
         }
     }
@@ -154,29 +150,29 @@ function parse(directory,file,MTPath,onParsed){
  * object.
  */
 var events={
-    "blur":'blur',
-    "focus":'focus',
-    "focusin":'focusin',
-    "focusout":'focusout',
-    "load":'load',
-    "resize":'resize',
-    "scroll":'scroll',
-    "unload":'unload',
-    "click":'click',
-    "dblclick":'dblclick',
-    "mousedown":'mousedown',
-    "mouseup":'mouseup',
-    "mousemove":'mousemove',
-    "mouseover":'mouseover',
-    "mouseout":'mouseout',
-    "mouseenter":'mouseenter',
-    "mouseleave":'mouseleave',
-    "change":'change',
-    "select":'select',
-    "submit":'submit',
-    "keydown":'keydown',
-    "keypress":'keypress',
-    "keyup":'keyup',
-    "error":'error'
+    'blur':'blur',
+    'focus':'focus',
+    'focusin':'focusin',
+    'focusout':'focusout',
+    'load':'load',
+    'resize':'resize',
+    'scroll':'scroll',
+    'unload':'unload',
+    'click':'click',
+    'dblclick':'dblclick',
+    'mousedown':'mousedown',
+    'mouseup':'mouseup',
+    'mousemove':'mousemove',
+    'mouseover':'mouseover',
+    'mouseout':'mouseout',
+    'mouseenter':'mouseenter',
+    'mouseleave':'mouseleave',
+    'change':'change',
+    'select':'select',
+    'submit':'submit',
+    'keydown':'keydown',
+    'keypress':'keypress',
+    'keyup':'keyup',
+    'error':'error'
 };
 exports.parse=parse;

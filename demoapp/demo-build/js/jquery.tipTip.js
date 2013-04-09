@@ -45,8 +45,6 @@
 			$("body").append(tiptip_holder.html(tiptip_content).prepend(tiptip_arrow.html('<div id="tiptip_arrow_inner"></div>')));
 		} else {
 			var tiptip_holder = $("#tiptip_holder");
-			if(opts.maxWidth)
-				$(tiptip_holder).css("max-width",opts.maxWidth);
 			var tiptip_content = $("#tiptip_content");
 			var tiptip_arrow = $("#tiptip_arrow");
 		}
