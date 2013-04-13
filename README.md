@@ -1,46 +1,43 @@
-Rakkar
+rakkar
 ======
+**(Just another HTML Templating Framework, not)**
 
-Rakkar helps you develop a dynamic and maintain webapp in a clean and easy way.  It provides a great set of building blocks for typical JavaScript applications which generate HTML on the fly and use multiple Javascript files.
-
-The idea behind Rakkar arose from a personal need which came up while we were working on the front-end of www.metataste.com, which is a reasonably big dynamic webapp. The business logic of Metataste was mixing up heavily with the HTML generation part. This made the code dirty and was a maintenance nightmare. Not only this, minifying and combining multiple Javascript files for deployment was a headache. 
-If you are making a web or mobile app which generates HTML dynamically from JSON, then Rakkar is a great option . It has been in use for www.metataste.com for quite some time.
+rakkar helps you create a **clean**, **dynamic** and **maintainable** web application in easy way. 
 
 Here are some salient features :
 
-* Separate view from control in your code.
+* **Expressive** - Write your javascript code where it belongs (in a javascript file). Why should you be using '{}', '<%= %>', '#' or '${}' while writing "HTML fragments". Apart from this, custom attributes and tags are really handy and let you write unobtrusive modular code.
 
-* Package your entire application in an easy and clean manner
+* **Precompiled** - Precompile HTML code in minified javascript. Give browser your instructions in native javascript Object. Uses node.js to compile code.
 
-* Integrated and minified view and control, for efficiency during runtime(less and smaller resources are downloaded)
+* **Load on demand** - You don't have to worry about loading template. Just tell the path and rakkar does it for you, if instructions are not available in browser.
 
-* Generate DOM on the fly from Javascript objects/JSON, via declarative and easy to write HTML like instructions
+* **Scope** - Each module runs in it's own scope, while sharing module level data across templates.
 
-* Easily control the structure of a generated HTML fragment using condition attribute
+* **Event handling** - Bind events while creating the element
 
-* Attach events to generated DOM elements by simply declaring them as attributes in your HTML instruction(onClick, onHover etc)
+### Custom Tags and attributes  ---->
 
-* Reuse HTML instruction fragments at multiple places.
+* **Condition** (attribute)- Decide whether this HTML element needs to be created or not.
 
-* Declare callbacks to be executed before or after a generated HTML element is created (Can be quite very useful)
+* **execPre** (attribute)- Pre-processor for HTML element. Execute a method provided as it's value to accomplish tasks required before creating this HTML element.
 
-* Easy to write looping instructions for creation of HTML
+* **execPost** (attribute) - Postprocessor for HTML element. Execute method provided as it's value to execute task after HTML element get created.
 
-### Custom Tags and attributes for HTML generation and event management ---->
+* **toolTip** (attribute) - Give your element a fancy toolTip by using jQuery tipTip.js
 
-* **Condition** (attribute)- Should have function in it's value which returns a Boolean value which decides whether the  HTML
-                        Tag is to be generated or not.                        
-* **execPre** (attribute)- Should pass a function as it's value along with a callback which is to be executed once the function is processed.
-* **execPost** (attribute) - Should have function as it's value. This function is called when the tag is created along with its entire subtree.
-* **toolTip** (attribute) - It Can have a String or function or javascript object '.' notation as it's value, to show fancy
-                      toolTip over element. It uses tipTip.js jquery plugin.
-* **data** (attribute) - It Can have a String or function or javascript object '.' notation as it's value, to store any type
-                   of data related to HTML element for further use.
-* **repeat** (tag) - It is a special type of tag to iterate over any array. It has a special attribute 'repeatarray', which
-               can have a String or function or javascript object '.' notation as it's value, that returns an array to
-               the tag. It is useful, in creating same HTML fragment for different items.
+* **data** (attribute) - Attach data to your element using jQuery data.
 
-Files included can be used to run a demo. Lets have a look here:
+* **repeat** (tag) - Loop through the given array and create the child HTML fragment for all the items in array.
+
+**Catches**
+* **Dot Notation** - We have preserved dot notation to get value from javascript object in text node. To have a real dot (.) in text, you will have to escape it using cap (^) symbol.
+
+**Requirements**
+* node.js to compile template on your machine.
+* XML file to write HTML fragment.
+
+Files included has running demo. Lets have a look here:
 
       XML file should be like this:
       
