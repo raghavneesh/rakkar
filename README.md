@@ -1,98 +1,104 @@
-rakkar
-======
-**(Just another HTML Templating Framework, not)**
+## rakkar.js - For awesome dynamic web applications.
 
-rakkar helps you create a **clean**, **dynamic** and **maintainable** web application in easy way. 
+Faster, modular, unobtrusive development.
 
-Here are some salient features :
+Just call javascript methods from HTML elements and make your HTML templates more readable.
 
-* **Expressive** - Write your javascript code where it belongs (in a javascript file). Why should you be using '{}', '<%= %>', '#' or '${}' while writing "HTML fragments". Apart from this, custom attributes and tags are really handy and let you write unobtrusive modular code.
+Example :
 
-* **Precompiled** - Precompile HTML code in minified javascript. Give browser your instructions in native javascript Object. Uses node.js to compile code.
+    <div id="somediv" class="getMyClass()" execPost="postProcess()" click="onClick"></div>
 
-* **Load on demand** - You don't have to worry about loading template. Just tell the path and rakkar does it for you, if instructions are not available in browser.
+## salient features -
+* Easy to use. Almost no learning curve.
+* Separate javascript code from HTML templates.
+* Pre-compiled. All the HTML templates are pre-compiled to native javascript instructions.
+* Does all the heavy lifting.
+  1. Load files automatically on demand.
+  2. Cache HTML configurations for further use.
+  3. Minify all the code.
 
-* **Scope** - Each module runs in it's own scope, while sharing module level data across templates.
+## Usage -
 
-* **Event handling** - Bind events while creating the element
+### Write -
 
-### Custom Tags and attributes  ---->
+To make most out of HTML templates, rakkar rather helps you write configurations to create HTML fragments in XML files like any HTML file.
 
-* **Condition** (attribute)- Decide whether this HTML element needs to be created or not.
+A sample XML file :
 
-* **execPre** (attribute)- Pre-processor for HTML element. Execute a method provided as it's value to accomplish tasks required before creating this HTML element.
+    <configs>
+         <!-- Import javascript file to use -->
+        <js>mytemplate.js</js>
 
-* **execPost** (attribute) - Postprocessor for HTML element. Execute method provided as it's value to execute task after HTML element get created.
+        <config id="my-reusable-template">
+           <div id="getMyId()" class="reusable-div">
+             <h1 condition="isHeading()">getHeading()</h1>
+             <p class="content">getContent()</p>
+           </div>
+        </config>
+    </configs>
 
-* **toolTip** (attribute) - Give your element a fancy toolTip by using jQuery tipTip.js
+ mytemplate.js :
+===================
 
-* **data** (attribute) - Attach data to your element using jQuery data.
+    var instructions = {
+      getMyId : function(data,$reusableDiv){
+                 return data.reusablediv.id;
+      },
+      isHeading : function(data,$parent){
+          if(data.heading === 'example')
+                return true;
+          return false;
+      },
+      getHeading : function(data,$heading){
+               return data.div.heading;
+      },
+      getContent : function(data, $content){
+                return data.div.content;
+      }
+    }
+### Compile -
+  Pre-compile your templates for faster use. Just use rakkar's node.js compiler.
 
-* **repeat** (tag) - Loop through the given array and create the child HTML fragment for all the items in array.
+    node compile.js -aprop myAppProperties.js
+
+  *myAppProperties.js has 'source' and 'build' directory path of the application.
+
+### Use on client - 
+    window.rakkar.createHTML(path,options).done(function(htmlCollection){
+      	deferred.resolveWith(deferred,[htmlCollection]);
+    });
+
+### * Options - 
+    appendTo    - Element to which HTML is to be appended.
+    contextData - Data object to be used in template.
+    instnName   - Config id
+    prefetch    - Prefetch the file
+  
+## Utilities -
+* condition - Take decision, whether to create this element or not, in element's attribute itself.
+* execPost - Assign post-processor on any element.
+* execPre - Assign pre-processor on element (under testing).
+* toolTip - Attach tipTip.js toolTip on element.
+* data - Put data in element.
+* repeat - It is a special tag to ease loop structures in HTML templates.
+
+repeat Example :
+
+    <ul>
+      <repeat repeatArray="getItemsList()">
+         <li>listItem.text</li>
+      </repeat>
+    </ul>
+
 
 **Catches**
-* **Dot Notation** - We have preserved dot notation to get value from javascript object in text node. To have a real dot (.) in text, you will have to escape it using cap (^) symbol.
+* **Dot Notation** - Dot(.)  is preserved to get value from javascript object in HTML templates. To have a real dot (.) in text, you will have to escape it using cap (^) symbol.
 
-**Requirements**
+## Requirements -
 * node.js to compile template on your machine.
-* XML file to write HTML fragment.
 
-Files included has running demo. Lets have a look here:
-
-      XML file should be like this:
-      
-                            
-      <configs> <!-- Super parent tag like <html> in .html file, which contains all type of tags.-->
-         <js>home.js</js> <!-- Helper javascript file, which has helper functions for this xml -->                                                                             
-         <config id="home-container">  <!-- HTML fragments are defined in config tags. A file can have any number of      
-         config tags. A config tag must have an unique Id. You are free to call any config at any time. It will give you
-         HTML fragment defined in this. --> 
-         
-        <div id="container">
-            <h1>rakkar home</h1>        
-
-            <div class="nested-container-sample"  condition="isNestedContainer()">                
-                <span class="nested-element" click="dosomething"></span> <!--The tag got click event attached to it.
-                Wait!! 'dosomething' is a function written here with no paranthesis, as we normally do with events.
-                -->
-             </div>
-        </div>
-       </config> <!--Another config tag. -->                            
-          <config id="repeat-sample">
-              <div id="repeat-sample">                  
-                   <repeat  repeatarray="getItemArray()"> <!-- 'getItemArray()' here is a function which returns an
-                   array. Lets say [{name:"Banana", value:1},{name:"Mango",value:2}] -->
-                   
-                       <span>item.name</span> <!-- This tag will be created twice, one for each element.Item here is the
-                       object from array, and we are accessing the name property. We could also have used 'getItemElem'
-                       function here, defined in helper javascript instead of '.' notation-->
-                    </repeat>
-              </div>
-          </config>
-      </configs>
-      Javascript helper file defined in XML file header should be like this:
-      
-      var instructions={ //An object to keep, helper functions and events used in xml
-                            //Context data here refers to any javascript object passed, to be used for html creation
-                            // Currently proecessing element is the currentElement
-                            
-                            isNestedContainer: function(contextData,currentElement){
-                                                     return true;  
-                                                },
-                            getItemArray: function(contextData,currentElement){
-                                                return contextData.items;
-                                            },
-                                            
-                             //Context data for this function would be an item
-                             //of array,because it is running under repeat tag
-                             
-                            getItemElem: function(item){
-                                            return item.name;
-                                         }
-                        }
-
-
-
+## Who is using rakkar.js -
+[metataste](http://metataste.com) - A movie search and recommendation engine.
 
 ----------------------------------------------------------------------
 **Note**- Will provide more information and updates, as soon as possible.
