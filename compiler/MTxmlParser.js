@@ -85,7 +85,9 @@ function parse(directory,file,MTPath,onParsed){
             instnSetObj['name']=instructionSetName;
            var instnChildren=[];
            jQuery(jQuery(instructionSet).children()).each(function(i,instnChild){
-            instnChildren.push(_makeInstructionObject(instnChild));
+		var instructionObj = _makeInstructionObject(instnChild); 
+		if(instructionObj)
+            		instnChildren.push(instructionObj);
            });
            if(instnChildren.length>0)
             instnSetObj['children']=instnChildren;
@@ -93,7 +95,11 @@ function parse(directory,file,MTPath,onParsed){
 
 
            function _makeInstructionObject(htmlInstnSet){
+		
             var instnObj={};
+		//Handling for comment node type
+		if(htmlInstnSet.nodeType===8)
+			return ;
             if(htmlInstnSet.nodeType===3){
                 instnObj.name='textNode';
                 instnObj['textvalue']=htmlInstnSet.nodeValue;
@@ -101,7 +107,9 @@ function parse(directory,file,MTPath,onParsed){
                 instnObj.name=htmlInstnSet.nodeName;
            var childInstructions=[];
            jQuery(htmlInstnSet.childNodes).each(function(i,childNode){
-            childInstructions.push(_makeInstructionObject(childNode));
+		var instructionObj =_makeInstructionObject(childNode); 	
+		if(instructionObj)
+	            childInstructions.push(instructionObj);
            });
            var instnAttrs=htmlInstnSet.attributes;
            if(!instnAttrs)
@@ -119,7 +127,9 @@ function parse(directory,file,MTPath,onParsed){
                 case 'append': jQuery(attrValue.split(',')).each(function(i,instnId){
                     var config=jQuery(xmlDoc).find('config#'+instnId);
                     jQuery(jQuery(config).children()).each(function(i,appendInstn){
-                        childInstructions.push(_makeInstructionObject(_cleanWhiteSpace(appendInstn)));
+			var instructionObj = _makeInstructionObject(_cleanWhiteSpace(appendInstn));
+			if(instructionObj)
+	                        childInstructions.push(instructionObj);
                     });
                 });
                 break;
